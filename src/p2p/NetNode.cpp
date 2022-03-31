@@ -650,7 +650,7 @@ namespace CryptoNote
 
         if (!proto.invoke(COMMAND_HANDSHAKE::ID, arg, rsp))
         {
-            logger(Logging::DEBUGGING)
+            logger(DEBUGGING)
                 << context
                 << "A daemon on the network has departed. MSG: Failed to invoke COMMAND_HANDSHAKE, closing connection.";
             return false;
@@ -660,27 +660,27 @@ namespace CryptoNote
 
         if (rsp.node_data.network_id != m_network_id)
         {
-            logger(Logging::DEBUGGING) << context << "COMMAND_HANDSHAKE Failed, wrong network! ("
+            logger(DEBUGGING) << context << "COMMAND_HANDSHAKE Failed, wrong network! ("
                                        << rsp.node_data.network_id << "), closing connection.";
             return false;
         }
 
         if (rsp.node_data.version < CryptoNote::P2P_MINIMUM_VERSION)
         {
-            logger(Logging::DEBUGGING) << context << "COMMAND_HANDSHAKE Failed, peer is wrong version! ("
+            logger(DEBUGGING) << context << "COMMAND_HANDSHAKE Failed, peer is wrong version! ("
                                        << std::to_string(rsp.node_data.version) << "), closing connection.";
             return false;
         }
         else if ((rsp.node_data.version - CryptoNote::P2P_CURRENT_VERSION) >= CryptoNote::P2P_UPGRADE_WINDOW)
         {
-            logger(Logging::WARNING) << context
+            logger(WARNING) << context
                                      << "COMMAND_HANDSHAKE Warning, your software may be out of date. Please visit: "
                                      << CryptoNote::LATEST_VERSION_URL << " for the latest version.";
         }
 
         if (!handle_remote_peerlist(rsp.local_peerlist, rsp.node_data.local_time, context))
         {
-            logger(Logging::ERROR) << context
+            logger(ERROR) << context
                                    << "COMMAND_HANDSHAKE: failed to handle_remote_peerlist(...), closing connection.";
             return false;
         }
@@ -692,7 +692,7 @@ namespace CryptoNote
 
         if (!m_payload_handler.process_payload_sync_data(rsp.payload_data, context, true))
         {
-            logger(Logging::ERROR)
+            logger(ERROR)
                 << context
                 << "COMMAND_HANDSHAKE invoked, but process_payload_sync_data returned false, dropping connection.";
             return false;
@@ -703,11 +703,11 @@ namespace CryptoNote
 
         if (rsp.node_data.peer_id == m_config.m_peer_id)
         {
-            logger(Logging::TRACE) << context << "Connection to self detected, dropping connection";
+            logger(TRACE) << context << "Connection to self detected, dropping connection";
             return false;
         }
 
-        logger(Logging::DEBUGGING) << context << "COMMAND_HANDSHAKE INVOKED OK";
+        logger(DEBUGGING) << context << "COMMAND_HANDSHAKE INVOKED OK";
         return true;
     }
 
@@ -741,7 +741,7 @@ namespace CryptoNote
 
         if (!handle_remote_peerlist(rsp.local_peerlist, rsp.local_time, context))
         {
-            logger(Logging::ERROR) << context
+            logger(ERROR) << context
                                    << "COMMAND_TIMED_SYNC: failed to handle_remote_peerlist(...), closing connection.";
             return false;
         }
@@ -1332,12 +1332,16 @@ namespace CryptoNote
     {
         if (!node_data.my_port)
         {
+            logger(Logging::TRACE) << context << "!node_data.my_port";
+            logger(Logging::TRACE) << node_data.my_port;
             return false;
         }
 
         uint32_t actual_ip = context.m_remote_ip;
         if (!m_peerlist.is_ip_allowed(actual_ip))
         {
+            logger(Logging::TRACE) << context << "!m_peerlist.is_ip_allowed(actual_ip)";
+            logger(Logging::TRACE) << actual_ip;
             return false;
         }
 
@@ -1347,6 +1351,8 @@ namespace CryptoNote
 
         try
         {
+            logger(Logging::TRACE) << context << "PING TRY";
+
             COMMAND_PING::request req;
             COMMAND_PING::response rsp;
             System::Context<> pingContext(
@@ -1468,6 +1474,7 @@ namespace CryptoNote
         {
             uint64_t peer_id_l = arg.node_data.peer_id;
             uint32_t port_l = arg.node_data.my_port;
+            logger(Logging::TRACE) << context << "ATTEMPTING PING";
 
             if (try_ping(arg.node_data, context))
             {
@@ -1482,6 +1489,8 @@ namespace CryptoNote
                 logger(Logging::TRACE) << context << "BACK PING SUCCESS, "
                                        << Common::ipAddressToString(context.m_remote_ip) << ":" << port_l
                                        << " added to whitelist";
+            }else{
+                logger(Logging::TRACE) << context << "FAILED PING";
             }
         }
 

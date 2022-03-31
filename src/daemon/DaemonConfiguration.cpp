@@ -307,9 +307,9 @@ namespace DaemonConfig
                 config.dbMaxFileSizeMB = cli["db-max-file-size"].as<int>();
             }
 
-            if (cli.count("local-ip") > 0)
+            if (cli.count("allow-local-ip") > 0)
             {
-                config.localIp = cli["local-ip"].as<bool>();
+                config.localIp = cli["allow-local-ip"].as<bool>();
             }
 
             if (cli.count("hide-my-port") > 0)
@@ -544,6 +544,8 @@ namespace DaemonConfig
                 else if (cfgKey.compare("allow-local-ip") == 0)
                 {
                     config.localIp = cfgValue.at(0) == '1';
+                    std::cout << "CONFIG UPDATED\n";
+                    std::cout << config.localIp<<"\n";
                     updated = true;
                 }
                 else if (cfgKey.compare("hide-my-port") == 0)
@@ -794,6 +796,8 @@ namespace DaemonConfig
 
         if (j.HasMember("allow-local-ip"))
         {
+            std::cout << "CONFIG UPDATED\n";
+            std::cout << config.localIp<<"\n";
             config.localIp = j["allow-local-ip"].GetBool();
         }
 

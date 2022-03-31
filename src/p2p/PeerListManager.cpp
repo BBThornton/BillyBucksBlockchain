@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <system/Ipv4Address.h>
 #include <time.h>
+#include <iostream>
+
 
 void PeerlistManager::serialize(CryptoNote::ISerializer &s)
 {
@@ -90,11 +92,16 @@ bool PeerlistManager::is_ip_allowed(uint32_t ip) const
     // never allow loopback ip
     if (addr.isLoopback())
     {
+        std::cout << "IS LOOPBACK IP SO FAIL\n";
+
         return false;
     }
 
     if (!m_allow_local_ip && addr.isPrivate())
     {
+        std::cout << "IS PRIVATE SO FAIL\n";
+        std::cout << m_allow_local_ip<<"\n";
+        std::cout << addr.isPrivate()<<"\n";
         return false;
     }
 
