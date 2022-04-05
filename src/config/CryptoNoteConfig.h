@@ -119,30 +119,30 @@ namespace CryptoNote
 
         const uint64_t MAXIMUM_MIXIN_V1 = 100;
 
-        const uint64_t MINIMUM_MIXIN_V2 = 7;
+        const uint64_t MINIMUM_MIXIN_V2 = 0;
 
         const uint64_t MAXIMUM_MIXIN_V2 = 7;
 
-        const uint64_t MINIMUM_MIXIN_V3 = 3;
+        const uint64_t MINIMUM_MIXIN_V3 = 0;
 
         const uint64_t MAXIMUM_MIXIN_V3 = 3;
 
         /* The heights to activate the mixin limits at */
-        const uint32_t MIXIN_LIMITS_V1_HEIGHT = 0;
+        const uint32_t MIXIN_LIMITS_V1_HEIGHT = 440000;
 
-        const uint32_t MIXIN_LIMITS_V2_HEIGHT = 1;
+        const uint32_t MIXIN_LIMITS_V2_HEIGHT = 620000;
 
-        const uint32_t MIXIN_LIMITS_V3_HEIGHT = 2;
+        const uint32_t MIXIN_LIMITS_V3_HEIGHT = 800000;
 
         /* The mixin to use by default with wallet software */
         /* DEFAULT_MIXIN_V0 is the mixin used before MIXIN_LIMITS_V1_HEIGHT is started */
         const uint64_t DEFAULT_MIXIN_V0 = 3;
 
-        const uint64_t DEFAULT_MIXIN_V1 = MAXIMUM_MIXIN_V1;
+        const uint64_t DEFAULT_MIXIN_V1 = MINIMUM_MIXIN_V1;
 
-        const uint64_t DEFAULT_MIXIN_V2 = MAXIMUM_MIXIN_V2;
+        const uint64_t DEFAULT_MIXIN_V2 = MINIMUM_MIXIN_V2;
 
-        const uint64_t DEFAULT_MIXIN_V3 = MAXIMUM_MIXIN_V3;
+        const uint64_t DEFAULT_MIXIN_V3 = MINIMUM_MIXIN_V3;
 
         const uint64_t DEFAULT_DUST_THRESHOLD = UINT64_C(10);
 
@@ -256,7 +256,7 @@ namespace CryptoNote
 
         const uint32_t UPGRADE_HEIGHT_V7 = 46; // Upgrade height for Chukwa v2 switch
 
-        const uint32_t UPGRADE_HEIGHT_CURRENT = UPGRADE_HEIGHT_V2;
+        const uint32_t UPGRADE_HEIGHT_CURRENT = UPGRADE_HEIGHT_V7;
 
         const unsigned UPGRADE_VOTING_THRESHOLD = 90; // percent
         const uint32_t UPGRADE_VOTING_WINDOW = EXPECTED_NUMBER_OF_BLOCKS_PER_DAY; // blocks
@@ -271,7 +271,7 @@ namespace CryptoNote
         };
 
         /* MAKE SURE TO UPDATE THIS VALUE WITH EVERY MAJOR RELEASE BEFORE A FORK */
-        const uint64_t SOFTWARE_SUPPORTED_FORK_INDEX = 0;
+        const uint64_t SOFTWARE_SUPPORTED_FORK_INDEX = 17;
 
         const uint64_t FORK_HEIGHTS_SIZE = sizeof(FORK_HEIGHTS) / sizeof(*FORK_HEIGHTS);
 
@@ -349,7 +349,7 @@ namespace CryptoNote
 
     const char *const SEED_NODES[] = {
         "192.168.1.113:22221",//Node1
-        //"192.168.1.111:22221", //Node2
+        "192.168.1.111:22221", //Node2
         //"192.168.1.106:22221"
         //"192.168.1.120:22221"
     };

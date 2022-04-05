@@ -73,10 +73,13 @@ void syncWallet(const std::shared_ptr<WalletBackend> walletBackend)
             stuckCounter = 0;
         }
 
+        std::cout << "RANGE " << walletBlockCount <<" " << tmpWalletBlockCount<<"\n";
         /* Get any transactions in between the previous height and the new
            height */
         for (const auto &tx : walletBackend->getTransactionsRange(walletBlockCount, tmpWalletBlockCount))
         {
+            std::cout << "TRANSACTION\n";
+            printIncomingTransfer(tx);
             /* Don't print out fusion transactions */
             if (!tx.isFusionTransaction())
             {

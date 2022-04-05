@@ -85,6 +85,8 @@ void balance(const std::shared_ptr<WalletBackend> walletBackend)
        See https://github.com/turtlecoin/turtlecoin/issues/531 */
     if (walletBackend->isViewWallet())
     {
+        //BT: DEBUG MESSAGE
+        // std::cout << "TRANSACTIONS\n"; 
         unlockedBalance = 0;
 
         const auto transactions = walletBackend->getTransactions();
@@ -93,6 +95,7 @@ void balance(const std::shared_ptr<WalletBackend> walletBackend)
         {
             if (!tx.isFusionTransaction())
             {
+               
                 unlockedBalance += tx.totalAmount();
             }
         }
@@ -294,6 +297,7 @@ void reset(const std::shared_ptr<WalletBackend> walletBackend)
        them out */
     walletBackend->m_eventHandler->onTransaction.pause();
 
+    /*BT: RESET WALLET CALL*/
     walletBackend->reset(scanHeight, timestamp);
 
     syncWallet(walletBackend);

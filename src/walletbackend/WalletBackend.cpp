@@ -1031,12 +1031,15 @@ std::tuple<uint64_t, uint64_t, uint64_t> WalletBackend::getSyncStatus() const
 {
     /* The last block the wallet has synced */
     uint64_t walletBlockCount = m_walletSynchronizer->getCurrentScanHeight();
+    std::cout<<"Wallet Block Count "<<walletBlockCount<<"\n";
 
     /* The last block the daemon has synced */
     uint64_t localDaemonBlockCount = m_daemon->localDaemonBlockCount();
+    std::cout<<"Local Block Count "<<localDaemonBlockCount<<"\n";
 
     /* The last block on the network, that the daemon is aware of */
     uint64_t networkBlockCount = m_daemon->networkBlockCount();
+    std::cout<<"Network Block Count "<<networkBlockCount<<"\n";
 
     return {walletBlockCount, localDaemonBlockCount, networkBlockCount};
 }
@@ -1155,10 +1158,12 @@ WalletTypes::WalletStatus WalletBackend::getStatus() const
 std::vector<WalletTypes::Transaction>
     WalletBackend::getTransactionsRange(const uint64_t startHeight, const uint64_t endHeight) const
 {
+    std::cout<<"Start "<<startHeight;
+    std::cout<<"\n End "<<endHeight<<"\n";
     std::vector<WalletTypes::Transaction> result;
 
     const auto transactions = getTransactions();
-
+    
     std::copy_if(
         transactions.begin(),
         transactions.end(),

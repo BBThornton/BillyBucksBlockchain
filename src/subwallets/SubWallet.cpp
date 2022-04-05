@@ -10,7 +10,7 @@
 #include <logger/Logger.h>
 #include <utilities/Utilities.h>
 #include <walletbackend/Constants.h>
-
+#include <iostream>
 ///////////////////////////////////
 /* CONSTRUCTORS / DECONSTRUCTORS */
 ///////////////////////////////////
@@ -87,6 +87,7 @@ std::tuple<Crypto::KeyImage, Crypto::SecretKey> SubWallet::getTxInputKeyImage(
 
 void SubWallet::storeTransactionInput(const WalletTypes::TransactionInput input, const bool isViewWallet)
 {
+    std::cout<<"Store Transaction Input \n";
     /* Can't create a key image with a view wallet - but we still store the
        input so we can calculate the balance */
     if (!isViewWallet)
@@ -118,19 +119,21 @@ void SubWallet::storeTransactionInput(const WalletTypes::TransactionInput input,
         std::stringstream stream;
 
         stream << "Input with key " << input.key << " being stored is already present in unspent inputs vector.";
-
+        std::cout<<stream.str();
         Logger::logger.log(stream.str(), Logger::WARNING, {Logger::SYNC});
     }
 }
 
 std::tuple<uint64_t, uint64_t> SubWallet::getBalance(const uint64_t currentHeight) const
 {
+    // std::cout << "GETTING BALANCE 2\n"; 
     uint64_t unlockedBalance = 0;
 
     uint64_t lockedBalance = 0;
 
     for (const auto &input : m_unspentInputs)
     {
+       
         /* If an unlock height is present, check if the input is unlocked */
         if (Utilities::isInputUnlocked(input.unlockTime, currentHeight))
         {
@@ -303,6 +306,7 @@ void SubWallet::markInputAsLocked(const Crypto::KeyImage keyImage)
 
 std::vector<Crypto::KeyImage> SubWallet::removeForkedInputs(const uint64_t forkHeight, const bool isViewWallet)
 {
+    
     /* This will get resolved by the wallet in time */
     m_unconfirmedIncomingAmounts.clear();
 
@@ -543,6 +547,7 @@ std::vector<Crypto::KeyImage> SubWallet::getKeyImages() const
 
 void SubWallet::fromJSON(const JSONValue &j)
 {
+    std::cout<<("From Json Subwallet \n");
     if (j.HasMember("walletIndex"))
     {
         m_walletIndex = getUint64FromJSON(j, "walletIndex");

@@ -14,7 +14,7 @@
 #include <random>
 #include <utilities/Addresses.h>
 #include <utilities/Utilities.h>
-
+#include <iostream>
 ///////////////////////////////////
 /* CONSTRUCTORS / DECONSTRUCTORS */
 ///////////////////////////////////
@@ -362,7 +362,7 @@ void SubWallets::addUnconfirmedTransaction(const WalletTypes::Transaction tx)
 void SubWallets::addTransaction(const WalletTypes::Transaction tx)
 {
     std::scoped_lock lock(m_mutex);
-
+    std::cout<<"ADD TRANSACTION \n";
     /* If we sent this transaction, we will input it into the transactions
        vector instantly. This lets us display the data to the user, and then
        when the transaction actually comes in, we will update the transaction
@@ -727,7 +727,8 @@ std::tuple<uint64_t, uint64_t> SubWallets::getBalance(
     const uint64_t currentHeight) const
 {
     std::scoped_lock lock(m_mutex);
-
+    //BT: Debug Comment
+    // std::cout << "GETTING BALANCE\n"; 
     /* If we're able to take from every subwallet, set the wallets to take from
        to all our public spend keys */
     if (takeFromAll)
@@ -890,6 +891,7 @@ bool SubWallets::isViewWallet() const
 
 void SubWallets::reset(const uint64_t scanHeight)
 {
+    std::cout<<"RESET FUNCTION HERE";
     std::scoped_lock lock(m_mutex);
 
     m_lockedTransactions.clear();
@@ -1061,6 +1063,8 @@ void SubWallets::fromJSON(const JSONObject &j)
 
     for (const auto &x : getArrayFromJSON(j, "transactions"))
     {
+        //BT: Debug Comment
+        // std::cout<<"TRANSACTION FROM JSON \n";
         WalletTypes::Transaction tx;
         tx.fromJSON(x);
         m_transactions.push_back(tx);

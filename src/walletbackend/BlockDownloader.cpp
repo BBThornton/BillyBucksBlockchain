@@ -156,6 +156,8 @@ void BlockDownloader::dropBlock(const uint64_t blockHeight, const Crypto::Hash b
 
 std::vector<std::tuple<WalletTypes::WalletBlockInfo, uint32_t>> BlockDownloader::fetchBlocks(const size_t blockCount)
 {
+    //BT: DEGUB MESSAGE
+    // std::cout<<"FETCH BLOCKS\n ";
     /* Attempt to fetch more blocks if we've run out */
     if (m_storedBlocks.size() == 0)
     {
@@ -170,7 +172,7 @@ std::vector<std::tuple<WalletTypes::WalletBlockInfo, uint32_t>> BlockDownloader:
 
     Logger::logger.log(
         "Fetched " + std::to_string(blocks.size()) + " blocks from internal store", Logger::DEBUG, {Logger::SYNC});
-
+    // std::cout<<"Fetched " + std::to_string(blocks.size()) + " blocks from internal store";
     return blocks;
 }
 
@@ -226,6 +228,8 @@ std::vector<Crypto::Hash> BlockDownloader::getBlockCheckpoints() const
 
 bool BlockDownloader::downloadBlocks()
 {
+    //BT: DEBUG MESSAGE
+    // std::cout<<"DOWNLOAD BLOCKS \n";
     const uint64_t localDaemonBlockCount = m_daemon->localDaemonBlockCount();
 
     const uint64_t walletBlockCount = m_synchronizationStatus.getHeight();
@@ -244,6 +248,8 @@ bool BlockDownloader::downloadBlocks()
         stream << "First checkpoint: " << blockCheckpoints.front() << "\nLast checkpoint: " << blockCheckpoints.back();
 
         Logger::logger.log(stream.str(), Logger::DEBUG, {Logger::SYNC});
+        //BT: DEBUG MESSAGE
+        // std::cout<<stream.str();
     }
 
     const auto [success, blocks, topBlock] = m_daemon->getWalletSyncData(
@@ -273,7 +279,7 @@ bool BlockDownloader::downloadBlocks()
         m_daemon->decreaseRequestedBlockCount();
 
         Logger::logger.log("Zero blocks received from daemon, possibly fully synced", Logger::DEBUG, {Logger::SYNC});
-
+        std::cout<<"Zero blocks received from daemon, possibly fully synced \n";
         return false;
     }
 

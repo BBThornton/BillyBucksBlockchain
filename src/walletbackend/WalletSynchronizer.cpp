@@ -112,11 +112,12 @@ WalletSynchronizer::~WalletSynchronizer()
 void WalletSynchronizer::mainLoop()
 {
     auto lastCheckedLockedTransactions = std::chrono::system_clock::now();
-
+    //BT: DEBUG MESSAGE
+    // std::cout<<"BLOCK SYNCHRONISER 2\n";
+    
     while (!m_shouldStop)
     {
         const auto blocks = m_blockDownloader.fetchBlocks(Constants::BLOCK_PROCESSING_CHUNK);
-
         if (!blocks.empty())
         {
             m_blockProcessingQueue.push_back_n(blocks.begin(), blocks.end());
@@ -177,7 +178,7 @@ void WalletSynchronizer::mainLoop()
                     m_endScanHeight = std::nullopt;
                     break;
                 }
-
+                // std::cout<<"BLOCK SYNCHRONISER \n";
                 completeBlockProcessing(block, ourInputs);
                 m_processedBlocks.pop_unsafe();
             }
