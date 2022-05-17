@@ -246,15 +246,15 @@ namespace CryptoNote
 
         const uint32_t UPGRADE_HEIGHT_V2 = 1;
 
-        const uint32_t UPGRADE_HEIGHT_V3 = 5;
+        const uint32_t UPGRADE_HEIGHT_V3 = 2;
 
-        const uint32_t UPGRADE_HEIGHT_V4 = 13; // Upgrade height for CN-Lite Variant 1 switch.
+        const uint32_t UPGRADE_HEIGHT_V4 = 3; // Upgrade height for CN-Lite Variant 1 switch.
 
-        const uint32_t UPGRADE_HEIGHT_V5 = 24; // Upgrade height for CN-Turtle Variant 2 switch.
+        const uint32_t UPGRADE_HEIGHT_V5 = 4; // Upgrade height for CN-Turtle Variant 2 switch.
 
-        const uint32_t UPGRADE_HEIGHT_V6 = 35; // Upgrade height for Chukwa v1 switch.
+        const uint32_t UPGRADE_HEIGHT_V6 = 5; // Upgrade height for Chukwa v1 switch.
 
-        const uint32_t UPGRADE_HEIGHT_V7 = 46; // Upgrade height for Chukwa v2 switch
+        const uint32_t UPGRADE_HEIGHT_V7 = 6; // Upgrade height for Chukwa v2 switch
 
         const uint32_t UPGRADE_HEIGHT_CURRENT = UPGRADE_HEIGHT_V7;
 
@@ -348,8 +348,8 @@ namespace CryptoNote
 
 
     const char *const SEED_NODES[] = {
-        "192.168.1.113:22221",//Node1
-        "192.168.1.111:22221", //Node2
+        "192.168.1.111:22221",//Node1
+        "192.168.1.112:22221", //Node2
         //"192.168.1.106:22221"
         //"192.168.1.120:22221"
     };
